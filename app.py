@@ -1,13 +1,17 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
-import streamlit as st
+import datetime
+
+from database.db import create_tables
+create_tables()   
+
 from modules.students import create_student, list_students
 from modules.performance import record_score, get_student_performance
 from modules.analytics import calculate_risk
 from modules.ai_insights import generate_insights
 from modules.report import generate_student_report, generate_all_students_report
 from streamlit_pdf_viewer import pdf_viewer
-import datetime
 
 from database.queries import (
     get_all_subjects,
