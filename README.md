@@ -93,7 +93,7 @@ edutrack-lite/
 Fadil Owolara ADELABOU
 
 Software Development Student | Future Cybersecurity Engineer  
-GitHub: (add your link here)
+GitHub: [(add your link here)](https://github.com/available-pixel/edutrack-lite)
 
 ---
 
