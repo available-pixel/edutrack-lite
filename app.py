@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-from database.db import get_connection, create_tables
+from database.db import get_connection, init_db
 
 from modules.students import create_student, list_students
 from modules.performance import record_score, get_student_performance
@@ -22,9 +22,6 @@ from database.queries import (
     get_all_scores,
     delete_score
 )
-
-import sys
-import os
 
 # =========================
 # PAGE CONFIG
