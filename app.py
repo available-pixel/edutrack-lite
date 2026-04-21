@@ -3,8 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-from database.db import create_tables
-create_tables()   
+from database.db import get_connection, create_tables
 
 from modules.students import create_student, list_students
 from modules.performance import record_score, get_student_performance
@@ -24,10 +23,15 @@ from database.queries import (
     delete_score
 )
 
+import sys
+import os
+
 # =========================
 # PAGE CONFIG
 # =========================
 st.set_page_config(page_title="EduTrack Lite", layout="wide")
+
+create_tables()
 
 # =========================
 # SIDEBAR NAVIGATION
