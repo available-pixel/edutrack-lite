@@ -200,14 +200,18 @@ elif menu == "📝 Scores":
     # =========================
     # SESSION STATE (CONFIRMATIONS)
     # =========================
-    if "score_msg" not in st.session_state:
-        st.session_state.score_msg = None
-
-    if "delete_msg" not in st.session_state:
-        st.session_state.delete_msg = None
 
     students = list_students()
     subjects = get_all_subjects()
+
+    # =========================
+    # SESSION STATE (MESSAGES)
+    # =========================
+    if "score_success" not in st.session_state:
+        st.session_state.score_success = None
+
+    if "delete_success" not in st.session_state:
+        st.session_state.delete_success = None
 
     if not students or not subjects:
         st.warning("Add students and subjects first.")
@@ -229,13 +233,16 @@ elif menu == "📝 Scores":
         scores, avg = get_student_performance(student_id)
 
         # =========================
-        # ✔ SUCCESS / DELETE MESSAGES (PERSISTENT)
+        # DISPLAY CONFIRMATIONS
         # =========================
-        if st.session_state.score_msg:
-            st.success(st.session_state.score_msg)
+        if st.session_state.score_success:
+            st.success(st.session_state.score_success)
 
-        if st.session_state.delete_msg:
-            st.success(st.session_state.delete_msg)
+        if st.session_state.delete_success:
+            st.success(st.session_state.delete_success)
+
+        st.session_state.score_success = None
+        st.session_state.delete_success = None
 
         # =========================
         # ➕ ADD SCORE FORM
@@ -254,9 +261,6 @@ elif menu == "📝 Scores":
 
             submit = st.form_submit_button("Save Score")
 
-        # 👉 message container (RIGHT BELOW BUTTON AREA)
-        score_msg = st.empty()
-
         if submit:
 
             result = record_score(
@@ -268,13 +272,14 @@ elif menu == "📝 Scores":
 
             if "successfully" in result or "scored" in result:
 
-                score_msg.success(
+                st.session_state.score_success = (
                     f"✅ {selected_student} scored {score} in {selected_subject} successfully!"
                 )
 
-            else:
-                score_msg.warning(result)
+                st.rerun()
 
+            else:
+                st.error(result)
         # =========================
         # 📊 STUDENT DETAILS
         # =========================
@@ -300,8 +305,6 @@ elif menu == "📝 Scores":
                 list(score_map.keys())
             )
 
-            delete_msg = st.empty()
-
             if st.button("Delete Score"):
 
                 score_id = score_map[selected_score]
@@ -311,10 +314,11 @@ elif menu == "📝 Scores":
 
                 delete_score(score_id)
 
-                # ✅ SHOW CONFIRMATION (NO RERUN)
-                delete_msg.success(
+                st.session_state.delete_success = (
                     f"🗑️ Deleted: {selected_student} → {subject_name} ({score_value})"
                 )
+
+                st.rerun()
             # =========================
             # 🏆 STRONG VS WEAK SUBJECTS
             # =========================
