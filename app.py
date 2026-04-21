@@ -27,8 +27,7 @@ from database.queries import (
 # PAGE CONFIG
 # =========================
 st.set_page_config(page_title="EduTrack Lite", layout="wide")
-
-create_tables()
+init_db()
 
 # =========================
 # SIDEBAR NAVIGATION
