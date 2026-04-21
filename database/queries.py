@@ -133,6 +133,32 @@ def get_subject_by_id(subject_id):
     conn.close()
     return subject
 
+# =========================
+# DELETE SUBJECT (ADD HERE)
+# =========================
+def delete_subject(subject_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM subjects WHERE id = ?", (subject_id,))
+
+    conn.commit()
+    conn.close()
+
+    return "Subject deleted successfully"
+
+def subject_has_scores(subject_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*) FROM scores WHERE subject_id = ?
+    """, (subject_id,))
+
+    count = cursor.fetchone()[0]
+    conn.close()
+
+    return count > 0
 
 # =========================
 # SCORE OPERATIONS

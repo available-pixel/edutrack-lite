@@ -20,7 +20,9 @@ from database.queries import (
     get_student_count,
     get_subject_count,
     get_all_scores,
-    delete_score
+    delete_score,
+    delete_subject,        
+    subject_has_scores     
 )
 
 # =========================
@@ -182,17 +184,65 @@ elif menu == "👨‍🎓 Students":
 # =========================
 # 📚 SUBJECTS
 # =========================
+# =========================
+# 📚 SUBJECTS
+# =========================
 elif menu == "📚 Subjects":
 
     st.header("📚 Manage Subjects")
 
-    with st.form("subject_form"):
-        subject_name = st.text_input("Subject Name")
-        submit = st.form_submit_button("Add Subject")
+    # =========================
+    # CHECK STUDENTS FIRST
+    # =========================
+    students = list_students()
 
-        if submit:
-            result = add_subject(subject_name)
-            st.success(result)
+    if len(students) == 0:
+        st.warning("⚠️ You must create at least one student before adding subjects.")
+
+    else:
+
+        # =========================
+        # ADD SUBJECT
+        # =========================
+        with st.form("subject_form"):
+            subject_name = st.text_input("Subject Name")
+            submit = st.form_submit_button("Add Subject")
+
+            if submit:
+                result = add_subject(subject_name)
+                st.success(result)
+
+    st.divider()
+
+    # =========================
+    # LIST + DELETE SUBJECTS (PUT YOUR BLOCK HERE)
+    # =========================
+    subjects = get_all_subjects()
+
+    if subjects:
+
+        subject_map = {s[1]: s[0] for s in subjects}
+
+        st.subheader("🗑️ Delete Subject")
+
+        selected_subject = st.selectbox(
+            "Select subject to delete",
+            list(subject_map.keys())
+        )
+
+        confirm_delete = st.checkbox("⚠️ I confirm I want to delete this subject")
+
+        if st.button("Delete Subject"):
+
+            if not confirm_delete:
+                st.error("❌ Please confirm deletion first.")
+            else:
+                delete_subject(subject_map[selected_subject])
+                st.success(f"✅ Subject '{selected_subject}' deleted successfully.")
+                st.rerun()
+
+    else:
+        st.info("No subjects available yet.")
 
 # =========================
 # 📝 SCORES (UPGRADED UX)

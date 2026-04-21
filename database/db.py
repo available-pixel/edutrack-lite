@@ -1,41 +1,19 @@
 # database/db.py
-# 🔌 Database connection + initialization (Streamlit Cloud safe)
-
 import sqlite3
-import os
 
 DB_NAME = "edutrack.db"
 
 
-# =========================
-# CONNECTION
-# =========================
 def get_connection():
-    """
-    Create and return a SQLite connection
-    Safe for Streamlit Cloud (disable thread check issues)
-    """
-    conn = sqlite3.connect(
-        DB_NAME,
-        check_same_thread=False
-    )
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     return conn
 
 
-# =========================
-# INIT DATABASE
-# =========================
 def init_db():
-    """
-    Create all tables if they don't exist
-    Runs automatically on app startup
-    """
     conn = get_connection()
     cursor = conn.cursor()
 
-    # =========================
-    # STUDENTS TABLE
-    # =========================
+    # STUDENTS
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,9 +25,7 @@ def init_db():
     )
     """)
 
-    # =========================
-    # SUBJECTS TABLE
-    # =========================
+    # SUBJECTS
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS subjects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,9 +33,7 @@ def init_db():
     )
     """)
 
-    # =========================
-    # SCORES TABLE
-    # =========================
+    # SCORES
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS scores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,9 +46,7 @@ def init_db():
     )
     """)
 
-    # =========================
-    # NOTES TABLE
-    # =========================
+    # NOTES
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS notes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
