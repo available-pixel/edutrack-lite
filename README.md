@@ -90,7 +90,7 @@ edutrack-lite/
 
 ## 👨‍💻 Author
 
-Fadil ADE  
+Fadil Owolara ADELABOU
 Software Development Student | Future Cybersecurity Engineer  
 GitHub: (add your link here)
 
