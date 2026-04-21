@@ -91,6 +91,7 @@ edutrack-lite/
 ## 👨‍💻 Author
 
 Fadil Owolara ADELABOU
+
 Software Development Student | Future Cybersecurity Engineer  
 GitHub: (add your link here)
 
